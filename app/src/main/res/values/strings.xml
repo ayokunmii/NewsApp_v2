@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="no_internet_connection">no internet connection.</string>
+    <string name="no_article">There are no articles to get at the moment. \n Perhaps #MeToo is now obsolete?</string>
+</resources>
