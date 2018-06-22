@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.newsapp.MainActivity"
+    android:background="@color/background"
     android:orientation="vertical"
-    android:background="@color/background">
+    tools:context="com.example.android.newsapp.MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/banner_me_too"/>
-
+        android:src="@drawable/banner_me_too" />
 
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
-   <ListView
-       android:id="@+id/list"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:divider="@null"
-       android:dividerHeight="0dp"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
 
     <TextView
         android:id="@+id/empty_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text=""
         android:gravity="center"
-        android:textColor="@android:color/darker_gray"/>
+        android:text=""
+        android:textColor="@android:color/darker_gray" />
 </LinearLayout>

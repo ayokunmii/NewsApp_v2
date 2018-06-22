@@ -7,8 +7,8 @@ import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,22 +21,24 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>> {
     private static final int EARTHQUAKE_LOADER_ID = 1;
-    ListView ArticleListView;
-    private ArticleAdapter articleAdapter;
-    TextView empty;
     private static final String JSON_URL = "https://content.guardianapis.com/search?from-date=2018-01-01&order-by=newest&show-tags=contributor&show-fields=thumbnail&page-size=50&q=metoo&api-key=ee7fcfa8-a253-432e-9e44-80655700e71a";
-            //
+    ListView ArticleListView;
+    TextView empty;
+    private ArticleAdapter articleAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //initialise listview
         ArticleListView = (ListView) findViewById(R.id.list);
+        //initialise arrayadapter
         articleAdapter = new ArticleAdapter(this, new ArrayList<Article>());
-        //set the adapter to populate the screen
+        //set the adapter to populate the screen with listview content
         ArticleListView.setAdapter(articleAdapter);
-
+        //initialise textview responsible for displaying network and connection comment
         empty = (TextView) findViewById(R.id.empty_state);
+        //set listview to display this textview when it's empty
         ArticleListView.setEmptyView(empty);
 
         ArticleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return new ArticleLoader(this, JSON_URL);
 
     }
-
 
 
     @Override

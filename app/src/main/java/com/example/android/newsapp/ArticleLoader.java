@@ -12,15 +12,18 @@ import java.util.List;
 
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
     private String mUrl;
+
     public ArticleLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
+
     @Override
     protected void onStartLoading() {
         Log.i("Loader", "onStartLoading -");
         forceLoad();
     }
+
     @Override
     public List<Article> loadInBackground() {
         Log.i("Loader", "onLoadInBackground - -");

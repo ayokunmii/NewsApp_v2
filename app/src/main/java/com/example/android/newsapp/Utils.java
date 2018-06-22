@@ -15,14 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by ayoawotunde on 18/06/2018.
@@ -30,7 +24,8 @@ import java.util.TimeZone;
 
 public final class Utils {
     private static final String LOG_TAG = Utils.class.getSimpleName();
-    private Utils(){
+
+    private Utils() {
 
     }
 
@@ -110,7 +105,6 @@ public final class Utils {
     }
 
 
-
     //Convert the inputSream into a String which contains the
     // JSON response from the server.
 
@@ -129,7 +123,6 @@ public final class Utils {
     }
 
 
-
     //Return a list of articles objects that have been derived from a JSON parsing
     private static List<Article> extractArticles(String JSONresponse) {
         // If the JSON string is empty or null, then return early.
@@ -140,9 +133,10 @@ public final class Utils {
         List<Article> stories = new ArrayList<>();
 
         try {
-            // Convert JSON_RESPONSE String into a JSONObject
+            // Convert JSON_URL String into a JSONObject
             JSONObject baseJsonResponse = new JSONObject(JSONresponse);
             JSONObject response = baseJsonResponse.getJSONObject("response");
+            //getting all the article objects in the array
             JSONArray storyArray = response.getJSONArray("results");
 
             // Get all results by looping through
@@ -155,32 +149,31 @@ public final class Utils {
                 JSONArray tags = currentArticle.getJSONArray("tags");
                 //get the author
                 String author;
-                if(tags.length()>0){
+                if (tags.length() > 0) {
                     JSONObject currentTag = tags.getJSONObject(0);
                     author = currentTag.getString("webTitle");
                 } else author = "";
                 //get picture
                 JSONObject fields = null;
-                try {fields = currentArticle.getJSONObject("fields");
-                } catch (JSONException e){
-                    Log.e(LOG_TAG, "Parsing problem, no value for Fields, default picture will be shown");
+                try {
+                    fields = currentArticle.getJSONObject("fields");
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, "Parsing problem, no value for Fields, no picture will be shown");
                 }
                 String pictureUrl;
-                if (fields!=null){
+                if (fields != null) {
                     pictureUrl = fields.getString("thumbnail");
                 } else {
                     pictureUrl = null;
                 }
                 // Extract “time” for time
                 String time = currentArticle.getString("webPublicationDate");
+                //Launch article page
+                String web = currentArticle.getString("webUrl");
 
-
-                //Launch website
-                String web= currentArticle.getString("webUrl");
-
-                //  Create Earthquake java object from magnitude, location, and time
-                //String title, String author, long dateTime, String web, String picture
+                //  Create Article java object from String title, String author, long dateTime, String web, String picture
                 Article story = new Article(headline, author, time, web, pictureUrl);
+                //add story object to arraylist
                 stories.add(story);
 
 

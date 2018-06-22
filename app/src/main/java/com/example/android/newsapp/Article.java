@@ -11,14 +11,14 @@ import java.util.ListIterator;
  * Created by ayoawotunde on 18/06/2018.
  */
 
-public class Article implements List{
-    private String  mTitleArticle;
+public class Article implements List {
+    private String mTitleArticle;
     private String mAuthor;
     private String mTime;
     private String mWeb;
     private String mPicture;
 
-    public Article (String title, String author, String dateTime, String web, String picture){
+    public Article(String title, String author, String dateTime, String web, String picture) {
         mTitleArticle = title;
         mAuthor = author;
         mTime = dateTime;

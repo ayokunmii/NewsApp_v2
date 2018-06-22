@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.newsapp.MainActivity"
+    android:background="@color/background"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/background">
+    tools:context="com.example.android.newsapp.MainActivity">
 
     <ImageView
         android:id="@+id/article_image"
@@ -26,46 +24,41 @@
             android:id="@+id/article_headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:layout_weight="3"
             android:ellipsize="end"
             android:maxLines="2"
-            tools:text="#METOO MOVEMENT is a valid movement that should be taken seriously"
-            />
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="#METOO MOVEMENT is a valid movement that should be taken seriously" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="- "/>
+                style="@style/TextView_Basics"
+                android:text="- " />
+
             <TextView
                 android:id="@+id/author"
+                style="@style/TextView_Basics"
                 android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:textStyle="italic"
-                android:textColor="@android:color/secondary_text_light"
-                tools:text="Author"/>
+                tools:text="Author" />
 
             <TextView
                 android:id="@+id/date"
+                style="@style/TextView_Basics"
                 android:layout_weight="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                tools:text="Date"/>
+                tools:text="Date" />
+
             <TextView
                 android:id="@+id/time"
+                style="@style/TextView_Basics"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/secondary_text_light"
-                tools:text="Time"/>
+                tools:text="Time" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

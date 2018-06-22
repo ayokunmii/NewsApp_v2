@@ -9,4 +9,10 @@
 
     </style>
 
+    <style name="TextView_Basics">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/secondary_text_light</item>
+    </style>
+
 </resources>
