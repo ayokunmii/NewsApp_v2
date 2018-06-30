@@ -2,4 +2,24 @@
     <string name="app_name">NewsApp</string>
     <string name="no_internet_connection">no internet connection.</string>
     <string name="no_article">There are no articles to get at the moment. \n Perhaps #MeToo is now obsolete?</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">newest</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_most_recent_value</string>
+
+    <!-- Label for order- option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_relevance_label">Relevance</string>
+    <string name="settings_order_by_relevance_value" translatable="false">relevance</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_most_recent_label">Most Recent</string>
+    <string name="settings_order_by_most_recent_value" translatable="false">newest</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Articles Settings</string>
+
+    <string name="settings_no_of_article_label">Number of articles</string>
+    <string name="settings_no_of_article_key" translatable="false">page-size</string>
+    <string name="settings_no_of_article_default" translatable="false">50</string>
 </resources>

@@ -24,12 +24,15 @@ import java.util.List;
 
 public final class Utils {
     private static final String LOG_TAG = Utils.class.getSimpleName();
+    private static final int SUCCESS_CODE = 200;
+    private static final int URL_READ_TIMEOUT = 10000; //milliseconds
+    private static final int URL_CONNECTION_TIMEOUT = 15000; //milliseconds
 
     private Utils() {
 
     }
 
-    // Query the USGS dataset and return an Earthquake object to represent a single earthquake.
+    // Query the dataset and return an Article object to represent a single story.
 
     public static List<Article> fetchArticles(String requestUrl) {
         // Create URL object
@@ -43,11 +46,11 @@ public final class Utils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        // Extract relevant fields from the JSON response and create an Earthquake object
-        List<Article> earthquake = extractArticles(jsonResponse);
+        // Extract relevant fields from the JSON response and create an Article object
+        List<Article> article = extractArticles(jsonResponse);
 
-        // Return the {@link Event}
-        return earthquake;
+        // Return articles
+        return article;
     }
 
 
@@ -78,21 +81,21 @@ public final class Utils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(URL_READ_TIMEOUT);
+            urlConnection.setConnectTimeout(URL_CONNECTION_TIMEOUT);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == SUCCESS_CODE) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

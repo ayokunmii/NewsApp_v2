@@ -4,12 +4,16 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>> {
     private static final int EARTHQUAKE_LOADER_ID = 1;
-    private static final String JSON_URL = "https://content.guardianapis.com/search?from-date=2018-01-01&order-by=newest&show-tags=contributor&show-fields=thumbnail&page-size=50&q=metoo&api-key=ee7fcfa8-a253-432e-9e44-80655700e71a";
+    private static final String JSON_URL = "https://content.guardianapis.com/search?";
     ListView ArticleListView;
     TextView empty;
     private ArticleAdapter articleAdapter;
@@ -52,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -81,8 +84,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<Article>> onCreateLoader(int i, Bundle bundle) {
         Log.i("Loader", "onCreateLoader: ");
-        // Create a new loader for the given URL
-        return new ArticleLoader(this, JSON_URL);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
+        String noOfArticles = sharedPrefs.getString(
+                getString(R.string.settings_no_of_article_key),
+                getString(R.string.settings_no_of_article_default));
+
+        String orderBy  = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(JSON_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value
+        uriBuilder.appendQueryParameter("from-date","2018-01-01");
+        uriBuilder.appendQueryParameter("api-key","ee7fcfa8-a253-432e-9e44-80655700e71a");
+        uriBuilder.appendQueryParameter("show-tags","contributor");
+        uriBuilder.appendQueryParameter("show-fields","thumbnail");
+        uriBuilder.appendQueryParameter("q", "metoo");
+        uriBuilder.appendQueryParameter("page-size", noOfArticles);
+        uriBuilder.appendQueryParameter("order-by", orderBy);
+
+        // Return new uri - "https://content.guardianapis.com/search?from-date=2018-01-01&order-by=newest&show-tags=contributor&show-fields=thumbnail&page-size=50&q=metoo&api-key=ee7fcfa8-a253-432e-9e44-80655700e71a";
+        return new ArticleLoader(this, uriBuilder.build().toString());
 
     }
 
@@ -111,5 +142,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<Article>> loader) {
         Log.i("Loader", "onLoaderReset -");
         articleAdapter.clear();
+    }
+
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
